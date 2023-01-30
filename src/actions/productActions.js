@@ -20,6 +20,24 @@ export const getProducts = () => async (dispatch) => {
   }
 };
 
+export const getProduct = (id) => async (dispatch) => {
+  try {
+    dispatch({
+      type: ProductConstants.PRODUCT_DETAILS_REQUEST,
+    });
+    const { data } = await axios.get(url + "/api/v1/product/" + id);
+    dispatch({
+      type: ProductConstants.PRODUCT_DETAILS_SUCCESS,
+      payload: data.product,
+    });
+  } catch (error) {
+    dispatch({
+      type: ProductConstants.PRODUCT_DETAILS_FAIL,
+      payload: error,
+    });
+  }
+};
+
 // clear function
 export const clearError = async (dispatch) => {
   dispatch({

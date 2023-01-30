@@ -4,7 +4,7 @@ const initialState = {
   products: [],
 };
 
-const ProductReducer = (state = initialState, action) => {
+export const ProductsReducer = (state = initialState, action) => {
   switch (action.type) {
     case productsConstants.ALL_PRODUCTS_REQUEST:
       return {
@@ -32,4 +32,26 @@ const ProductReducer = (state = initialState, action) => {
       return state;
   }
 };
-export default ProductReducer;
+export const ProductReducer = (state = { product: {} }, action) => {
+  switch (action.type) {
+    case productsConstants.PRODUCT_DETAILS_REQUEST:
+      return {
+        loading: true,
+        product: {},
+      };
+    case productsConstants.PRODUCT_DETAILS_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        product: action.payload,
+      };
+    case productsConstants.PRODUCT_DETAILS_FAIL:
+      return {
+        loading: false,
+        error: action.payload,
+      };
+
+    default:
+      return state;
+  }
+};
