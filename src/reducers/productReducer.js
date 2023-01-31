@@ -1,3 +1,4 @@
+import ProductConstants from "../constants/productConstants";
 const initialState = {
   products: [],
   product: {},
@@ -7,9 +8,36 @@ const initialState = {
 
 const ProductReducer = (state = initialState, action) => {
   switch (action.type) {
-    case "value":
-      break;
-
+    case ProductConstants.API_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+    case ProductConstants.API_FAIL:
+      return {
+        ...state,
+        loading: true,
+        products: [],
+      };
+    case ProductConstants.API_ERROR:
+      return {
+        ...state,
+        error: action.payload,
+      };
+    case ProductConstants.GET_ALL_PRODUCTS_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        products: action.payload.products,
+        resPerPage: action.payload.resPerPage,
+        productsCount: action.payload.productsCount,
+      };
+    case ProductConstants.GET_ONE_PRODUCT_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        product: action.payload,
+      };
     default:
       return state;
   }
